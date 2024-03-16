@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { IoBook } from "react-icons/io5";
 import { FaClock } from "react-icons/fa6";
-import { resepType } from "@/app/resep/page";
+import { resepType } from "@/app/resep/Resep";
 export const HoverEffect = ({
   items,
   className,
@@ -25,7 +25,7 @@ export const HoverEffect = ({
     >
       {items?.map((item: any, idx: number) => (
         <Link
-          href={"/"}
+          href={item["link-href"]}
           key={item?.link}
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
@@ -93,7 +93,7 @@ export const CardTitle = ({
         alt="image"
         width={100}
         height={100}
-        className="w-full group-hover:saturate-0 h-full object-cover"
+        className="w-full group-hover:saturate-0 saturate-100 h-full object-cover"
       />
     </div>
   );
