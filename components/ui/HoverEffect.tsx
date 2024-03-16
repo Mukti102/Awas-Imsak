@@ -1,17 +1,17 @@
+"use client";
 import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
+import { IoBook } from "react-icons/io5";
+import { FaClock } from "react-icons/fa6";
+import { resepType } from "@/app/resep/page";
 export const HoverEffect = ({
   items,
   className,
 }: {
-  items: {
-    title: string;
-    description: string;
-    link: string;
-  }[];
+  items: resepType[];
   className?: string;
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -23,9 +23,9 @@ export const HoverEffect = ({
         className
       )}
     >
-      {items.map((item, idx) => (
+      {items?.map((item: any, idx: number) => (
         <Link
-          href={item?.link}
+          href={"/"}
           key={item?.link}
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
@@ -49,8 +49,9 @@ export const HoverEffect = ({
             )}
           </AnimatePresence>
           <Card>
-            <CardTitle>{item.title}</CardTitle>
-            <CardDescription>{item.description}</CardDescription>
+            <CardTitle item={item} />
+            <CardDescription>{item?.title}</CardDescription>
+            <CardIcon item={item} />
           </Card>
         </Link>
       ))}
@@ -68,7 +69,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-black border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "rounded-2xl h-[450px] flex-1 p-2  overflow-hidden bg-black border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
         className
       )}
     >
@@ -78,19 +79,47 @@ export const Card = ({
     </div>
   );
 };
+
 export const CardTitle = ({
-  className,
-  children,
+  item,
 }: {
+  item: resepType;
   className?: string;
-  children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn("text-zinc-100 font-bold tracking-wide mt-4", className)}>
-      {children}
-    </h4>
+    <div className="w-full group bg-red-300 overflow-hidden h-52 rounded-lg">
+      <Image
+        src={item["image-src"]}
+        alt="image"
+        width={100}
+        height={100}
+        className="w-full group-hover:saturate-0 h-full object-cover"
+      />
+    </div>
   );
 };
+
+export const CardIcon = ({ item }: { item: resepType }) => {
+  return (
+    <div className="w-full  bottom-0 mt-5 flex justify-between">
+      <button className="w-max rounded-full border-green-900 border-[1.8px] px-3 py-2 font-medium flex items-center gap-2">
+        <span>
+          <FaClock />
+        </span>
+        {item?.time}
+      </button>
+      <button className="w-max rounded-full border-green-900 border-[1.8px] px-3 py-2 font-medium">
+        {item.difficulty ? item.difficulty : "-"}
+      </button>
+      <button className="w-max rounded-full border-green-900 border-[1.8px] px-3 py-2 font-medium">
+        <Link href={item["link-href"]} className="text-xl">
+          <IoBook />
+        </Link>
+      </button>
+    </div>
+  );
+};
+
 export const CardDescription = ({
   className,
   children,
@@ -101,7 +130,7 @@ export const CardDescription = ({
   return (
     <p
       className={cn(
-        "mt-8 text-zinc-400 tracking-wide leading-relaxed text-sm",
+        "mt-8 h-24  text-center text-zinc-100  font-semibold tracking-wide text-lg",
         className
       )}
     >

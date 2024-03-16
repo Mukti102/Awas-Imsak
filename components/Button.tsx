@@ -12,7 +12,7 @@ function Button(props: baseButtonProps) {
     <Link href={href} className="">
       <button
         {...res}
-        className="flex-1 hover:bg-green-900 py-2 px-7 text-lg rounded-full border-[1px] border-green-600"
+        className="flex-1 flex items-center gap-2 hover:bg-green-900 py-2 px-7 text-lg rounded-full border-[1px] border-green-600"
       >
         {children}
       </button>

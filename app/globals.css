@@ -12,3 +12,22 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.paginateStyle{
+    background-color:#111;
+    border: 1.4px #3d6713 solid;
+    padding: 8px 20px;
+    font-size: 1.1rem;
+    color: #3d6713;
+    border-radius: 3px;
+    margin: 0 5px;
+    text-align: center;
+}
+.paginateStyle:hover{
+    color: #dddd;
+    background-color: #3d6713;
+}
+
+.active{
+    background-color: #3d6713;
+    color: #ddd;
+}
