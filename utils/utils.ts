@@ -9,3 +9,7 @@ export const getCurrentDate = () => {
   const tahun = date.getFullYear();
   return `${tahun}-${formatDate(bulan)}-${formatDate(tanggal)}`;
 };
+
+export const formatTime = (e: number): string => {
+  return e < 10 ? `0${e}` : e.toString();
+};

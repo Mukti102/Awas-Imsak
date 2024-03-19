@@ -1,7 +1,7 @@
 import React from "react";
-import Tadarus from "./Tadarus";
+
 function page() {
-  return <Tadarus />;
+  return <div>page</div>;
 }
 
 export default page;

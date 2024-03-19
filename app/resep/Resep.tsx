@@ -1,9 +1,11 @@
+"use client";
+
 import Header from "@/components/Header";
 import { HoverEffect } from "@/components/ui/HoverEffect";
-import { IoSearch } from "react-icons/io5";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Loading from "@/components/ui/Loading/Loading";
+import Input from "@/components/Input";
 
 export type resepType = {
   difficulty: string;
@@ -34,7 +36,7 @@ function Resep() {
     fetchResep();
   }, []);
 
-  const handleChange = ({ selected }: { selected: number }) => {
+  const handleChange = ({ selected }: { selected: number }): void => {
     setCurrentPage(selected);
   };
 
@@ -56,17 +58,7 @@ function Resep() {
       ) : (
         <div className=" text-white w-full flex flex-col items-center p-10">
           <div className="w-[100%] p-5">
-            <div className="w-56 py-3 flex items-center  border-green-800 border-[1.5px] rounded-md px-3  bg-[#111]">
-              <span className="text-[1.4rem]">
-                <IoSearch />
-              </span>
-              <input
-                onChange={handleChangeInput}
-                type="text"
-                className="w-full text-lg px-2 outline-none  h-full bg-transparent"
-                placeholder="cari masakan..."
-              />
-            </div>
+            <Input onChange={handleChangeInput}>cari masakan...</Input>
             <div className="w-full flex flex-wrap">
               <HoverEffect items={currentResep} />
             </div>

@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode, useEffect, useState } from "react";
-import { getCurrentDate } from "@/utils/utils";
+import { getCurrentDate, formatTime } from "@/utils/utils";
 import BoxJadwal from "./boxJadwal";
 type cityType = {
   id: string;
@@ -11,7 +11,7 @@ export type scheduleType = Record<string, string>;
 
 function Jadwal() {
   const [city, setCity] = useState<cityType[] | null>(null);
-  const [schedule, setSchedule] = useState<null | scheduleType>(null);
+  const [schedule, setSchedule] = useState<null | any>(null);
   const [select, setSelect] = useState<string>("1001");
   const fetchCity = async () => {
     const data = await fetch("https://api.myquran.com/v2/sholat/kota/semua");
@@ -38,12 +38,57 @@ function Jadwal() {
   useEffect(() => {
     fetcSchedule();
   }, [select]);
+
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [formatCurrentTime, setFormatCurrentTime] = useState("");
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    // mendapatkan timezone
+    const timeOfminutes = currentTime.getTimezoneOffset();
+    const timeOfHour = Math.floor(timeOfminutes / 60);
+    let formatZona = "";
+    if (timeOfHour === 7) {
+      formatZona = "WIB";
+    } else if (timeOfHour === 8) {
+      formatZona = "WITA";
+    } else if (timeOfHour === 9) {
+      formatZona = "WIT";
+    } else {
+      formatZona = "WIB";
+    }
+
+    // format waktu
+    const getTime = `UTC${timeOfHour} | ${formatTime(
+      currentTime.getSeconds()
+    )} : ${currentTime.getMinutes()} : ${formatTime(
+      currentTime.getHours()
+    )} ${formatZona}`;
+    setFormatCurrentTime(getTime);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [currentTime]);
+
   return (
     <main className="w-1/2 p-8 flex flex-col items-center text-white">
-      <span className="font-sans  border-[1px] border-green-600 w-full text-center py-4 font-bold text-4xl bg-secondary rounded-full">
-        01:10:10 WIB
-      </span>
-      <form className=" mt-7 font-bold w-full">
+      <div
+        data-aos="fade-up"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+        className="font-sans  border-[1px] border-green-600 w-full text-center py-4 font-bold text-4xl bg-secondary rounded-full"
+      >
+        {formatCurrentTime}
+      </div>
+      <form
+        data-aos="fade-up"
+        data-aos-delay="100"
+        data-aos-duration="1500"
+        className=" mt-7 font-bold w-full"
+      >
         <label htmlFor="large" className="text-2xl text-start">
           Pilih Wilayah
         </label>
@@ -63,7 +108,12 @@ function Jadwal() {
           })}
         </select>
       </form>
-      <div className="my-1 w-full">
+      <div
+        data-aos="fade-up"
+        data-aos-delay="1000"
+        data-aos-duration="1500"
+        className="my-1 w-full"
+      >
         <div className="w-full flex text-[1.4rem] justify-between">
           <span className="font-semibold">Wilayah : </span>
           <span className="font-semibold">Hari/Tanggal : </span>

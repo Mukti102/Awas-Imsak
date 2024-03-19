@@ -1,9 +1,12 @@
 "use client";
+import AOS from "aos";
+import { useEffect } from "react";
+
 type boxJadwalProps = {
   schedule: Record<string, string>;
 };
+
 function BoxJadwal({ schedule }: any) {
-  console.log(schedule);
   const jadwal = [
     "imsak",
     "subuh",
@@ -14,11 +17,15 @@ function BoxJadwal({ schedule }: any) {
     "maghrib",
     "isya",
   ];
+
   return (
     <div className="w-full mt-3 flex-wrap justify-between flex">
       {jadwal?.map((item, index) => {
         return (
           <span
+            data-aos="fade-up"
+            data-aos-delay={`1${index}00`}
+            data-aos-duration="1500"
             key={index}
             className={`w-36 flex flex-col  my-2 py-2 rounded-sm bg-[#111] shadow-md shadow-green-950`}
           >
