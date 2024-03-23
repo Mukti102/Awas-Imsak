@@ -17,7 +17,9 @@ function Tadarus() {
   const suratPerPage = 8;
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState(0);
-  const filterSurat = surat.filter((item) => item?.namaLatin);
+  const filterSurat = surat.filter((item) =>
+    item?.namaLatin.toLowerCase().includes(inputValue)
+  );
 
   const ambilData = async () => {
     const res = await fetch(`https://equran.id/api/v2/surat`);
@@ -28,6 +30,7 @@ function Tadarus() {
   useEffect(() => {
     ambilData();
   }, []);
+
   // menampilkan berdasrkan selected
   const indexOfLastSurat = (selected + 1) * suratPerPage;
   const indexOfFirstSurat = indexOfLastSurat - suratPerPage;
@@ -42,35 +45,39 @@ function Tadarus() {
   };
 
   return (
-    <div className="mt-14">
+    <div className="sm:mt-14 mt-6">
       {surat.length === 0 ? (
         <div className="relative">
           <Loading />
         </div>
       ) : (
-        <div className="w-full max-h-screen">
-          <div className="w-full">
+        <div className="w-full max-h-screen overflow-hidden">
+          <div className="sm:w-full w-screen p-2 sm:p-0">
             <Input onChange={handleInputChange}>Cari Surat...</Input>
-            <div className="w-full mt-10 flex justify-between flex-wrap gap-2">
+            <div className="w-full sm:mt-10 mt-5 flex justify-between flex-wrap gap-2">
               {currentSurat?.map((item, index) => {
                 return (
                   <Link
                     href={`/tadarus/${item.nomor}`}
                     key={index}
-                    className="w-72  h-[6rem] bg-[#111] border-[1.2px] border-green-800 rounded-lg mt-2 p-3 flex flex-col justify-center gap-1"
+                    className="sm:w-72 w-[48%]  sm:h-[6rem] h-max bg-[#111] border-[1.2px] border-green-800 rounded-lg mt-2 p-3 flex flex-col justify-center gap-1"
                   >
                     <div className="flex pr-1 justify-between">
-                      <h1 className="font-bold text-[1.2rem]">
+                      <h1 className="font-bold text-sm sm:text-[1.2rem]">
                         {item?.namaLatin}
                       </h1>
-                      <span className={Arab.className}>{item?.nama}</span>
+                      <span
+                        className={(Arab.className, "sm:text-base text-xs")}
+                      >
+                        {item?.nama}
+                      </span>
                     </div>
-                    <h2>{item?.arti}</h2>
+                    <h2 className="sm:text-base text-sm">{item?.arti}</h2>
                   </Link>
                 );
               })}
             </div>
-            <div className="w-full mt-10 justify-center flex">
+            <div className="w-full sm:scale-100 scale-[60%]  h-12 items-center mt-10 justify-center flex">
               <ReactPaginate
                 pageCount={Math.ceil(surat?.length) / suratPerPage}
                 // pageRangeDisplayed={6}

@@ -27,12 +27,12 @@ function BoxJadwal({ schedule }: any) {
             data-aos-delay={`1${index}00`}
             data-aos-duration="1500"
             key={index}
-            className={`w-36 flex flex-col  my-2 py-2 rounded-sm bg-[#111] shadow-md shadow-green-950`}
+            className={`sm:w-32 w-[48%] flex flex-col  my-2 py-2 rounded-sm bg-[#111] shadow-md shadow-green-950`}
           >
-            <h1 className="text-[1.3rem] capitalize  font-bold p-3">
+            <h1 className="sm:text-[1.2rem] text-[1.1rem] capitalize  font-bold p-3">
               {item}
               <br />
-              <span className="font-semibold text-[1.2rem]">
+              <span className="font-medium sm:text-[1.1rem] text-[1rem]">
                 {schedule ? schedule[item] : ""}
               </span>
             </h1>

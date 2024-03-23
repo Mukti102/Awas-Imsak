@@ -26,3 +26,30 @@
     background-color: #3d6713;
     color: #ddd;
 }
+.audio-bar{
+    -webkit-appearance: none;
+    width: 100px;
+    height: 7px;
+    border-radius: 20px;
+}
+.audio-bar::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    height: 10px;
+    width: 10px;
+    background-color: #3d6713;
+    border-radius: 50%;
+}
+
+.audio-bar-mobile{
+    -webkit-appearance: none;
+    width: 100px;
+    height: 5px;
+    border-radius: 20px;
+}
+.audio-bar-mobile::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    height: 8px;
+    width: 8px;
+    background-color: #3d6713;
+    border-radius: 50%;
+}

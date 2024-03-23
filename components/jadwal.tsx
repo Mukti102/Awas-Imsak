@@ -12,7 +12,7 @@ export type scheduleType = Record<string, string>;
 function Jadwal() {
   const [city, setCity] = useState<cityType[] | null>(null);
   const [schedule, setSchedule] = useState<null | any>(null);
-  const [select, setSelect] = useState<string>("1001");
+  const [select, setSelect] = useState<string>("1622");
   const fetchCity = async () => {
     const data = await fetch("https://api.myquran.com/v2/sholat/kota/semua");
     const res = await data.json();
@@ -74,12 +74,12 @@ function Jadwal() {
   }, [currentTime]);
 
   return (
-    <main className="w-1/2 p-8 flex flex-col items-center text-white">
+    <main className="sm:w-1/2 w-full p-8 flex flex-col items-center text-white">
       <div
         data-aos="fade-up"
         data-aos-delay="50"
         data-aos-duration="1000"
-        className="font-sans  border-[1px] border-green-600 w-full text-center py-4 font-bold text-4xl bg-secondary rounded-full"
+        className="font-sans  border-[1px] border-green-600 w-full text-center sm:py-3 py-2 font-bold sm:text-3xl text-xl bg-secondary rounded-full"
       >
         {formatCurrentTime}
       </div>
@@ -89,14 +89,17 @@ function Jadwal() {
         data-aos-duration="1500"
         className=" mt-7 font-bold w-full"
       >
-        <label htmlFor="large" className="text-2xl text-start">
+        <label
+          htmlFor="large"
+          className="sm:text-2xl text-xl font-semibold text-start"
+        >
           Pilih Wilayah
         </label>
         <select
           id="large"
           onChange={handleSelect}
           value={select}
-          className="block outline-none text-primary w-full my-5 px-4 py-3 text-lg optional:font-normal  optional:uppercase text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+          className="block outline-none text-primary w-full sm:my-5 my-3 sm:px-4 px-3 sm:py-3 py-1 sm:text-lg text-[1rem] optional:font-normal  optional:uppercase  text-gray-900 border border-gray-300 sm:rounded-lg rounded-md bg-gray-50"
         >
           <option selected>{city ? city[100].lokasi : "Jakarta"}</option>
           {city?.map((kota) => {
@@ -114,11 +117,11 @@ function Jadwal() {
         data-aos-duration="1500"
         className="my-1 w-full"
       >
-        <div className="w-full flex text-[1.4rem] justify-between">
+        <div className="w-full flex sm:text-[1.4rem] text-[1.1rem] justify-between">
           <span className="font-semibold">Wilayah : </span>
           <span className="font-semibold">Hari/Tanggal : </span>
         </div>
-        <div className="w-full flex text-[1.4rem] justify-between">
+        <div className="w-full flex mt-1 sm:text-[1.4rem] text-[1.1rem] justify-between">
           <span className="">Jakarta</span>
           <span className="">Rabu/20/10/2002</span>
         </div>

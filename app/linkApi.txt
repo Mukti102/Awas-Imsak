@@ -1,4 +1,0 @@
-resep = https://mahi-api.cyclic.app/makanMalam
-kota = https://api.myquran.com/v2/sholat/kota/semua
-quran = https://quran-endpoint.vercel.app/quran
-jadwal = https://api.myquran.com/v2/sholat/jadwal

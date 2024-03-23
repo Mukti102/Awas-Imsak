@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
-  weight: "400",
+  weight: "300",
   subsets: ["latin"],
 });
 
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} bg-[#0c1a05] text-white bg-grid-white/[0.1]`}
+        className={`${poppins.className} bg-[#0c1a05]  text-white bg-grid-white/[0.1]`}
       >
         {children}
       </body>
