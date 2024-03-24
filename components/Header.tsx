@@ -25,7 +25,7 @@ function Header(props: HeaderProps) {
         </Button>
       </div>
       <h1
-        className={`${poppins.className} btn gradient-text text-center font-bold sm:text-[4.6rem] text-[1.8rem]`}
+        className={`${poppins.className}  gradient-text text-center font-bold sm:text-[4.6rem] text-[1.8rem]`}
       >
         {children}
       </h1>

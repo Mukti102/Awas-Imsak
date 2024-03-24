@@ -8,7 +8,7 @@ function Loading() {
   }, 3000);
 
   return (
-    <div className="flex loader flex-col  justify-center items-center gap-3">
+    <div className="flex loader flex-col   justify-center items-center gap-3">
       <div className="loader">
         <div className="inner one"></div>
         <div className="inner two"></div>

@@ -53,9 +53,11 @@ function Resep() {
   return (
     <>
       {currentResep.length === 0 ? (
-        <Loading />
+        <div>
+          <Loading />
+        </div>
       ) : (
-        <div className=" text-white sm:w-full w-screen overflow-hidden flex flex-col items-center p-10">
+        <div className=" text-white sm:w-full w-screen overflow-hidden flex flex-col items-center  p-10">
           <div className="w-full  sm:p-5 p-0">
             <Input onChange={handleChangeInput}>cari masakan...</Input>
             <div className="w-full flex flex-wrap">

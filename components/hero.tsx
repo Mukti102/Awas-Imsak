@@ -64,11 +64,12 @@ function Hero() {
         data-aos="fade-up"
         data-aos-delay="1000"
         data-aos-duration="1500"
-        className="flex flex-wrap sm:flex-nowrap sm:gap-0 gap-3 my-8 font-semibold sm:justify-between"
+        className="flex flex-wrap sm:flex-wrap sm:gap-0 gap-3 my-8 font-semibold sm:justify-between"
       >
         <Button href="/niat">Awas Lupa Niat</Button>
         <Button href="/tadarus">Awas Lupa Tadarus</Button>
         <Button href="/resep">Awas Lupa Masak</Button>
+        <Button href="/Self-Development">Self Development</Button>
       </div>
     </main>
   );

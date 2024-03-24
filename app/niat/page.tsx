@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import Card from "./Card";
 
 export const metadata: Metadata = {
-  title: "Awas Lupa Niat",
+  title: "Niat Puasa ",
   description: "Awas Jangan sampai lupa niat",
 };
 
