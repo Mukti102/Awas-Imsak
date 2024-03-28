@@ -9,7 +9,7 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/config/_firebase/config";
 import { useRouter } from "next/navigation";
 
-function SignInFormDemo() {
+export function SignInFormDemo() {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -135,5 +135,3 @@ const LabelInputContainer = ({
     </div>
   );
 };
-
-export default SignInFormDemo;
