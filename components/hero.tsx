@@ -6,12 +6,15 @@ import { Poppins } from "next/font/google";
 import AOS from "aos";
 import patern from "@/public/patern.png";
 import Image from "next/image";
+
+// fonts
 const poppins = Poppins({
   weight: "600",
   subsets: ["latin"],
 });
 
 function Hero() {
+  // AOS
   useEffect(() => {
     AOS.init();
   }, []);
@@ -69,7 +72,7 @@ function Hero() {
         <Button href="/niat">Awas Lupa Niat</Button>
         <Button href="/tadarus">Awas Lupa Tadarus</Button>
         <Button href="/resep">Awas Lupa Masak</Button>
-        <Button href="/Self-Development">Self Development</Button>
+        <Button href={"/Self-Development"}>Self Development</Button>
       </div>
     </main>
   );

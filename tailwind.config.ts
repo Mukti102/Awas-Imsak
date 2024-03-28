@@ -1,3 +1,4 @@
+import { plugin } from "postcss";
 import type { Config } from "tailwindcss";
 
 const svgToDataUri = require("mini-svg-data-uri");

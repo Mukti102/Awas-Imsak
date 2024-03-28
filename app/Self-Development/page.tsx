@@ -1,8 +1,6 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Sheet from "./sheet";
-import Image from "next/image";
-import notes from "@/public/notes.png";
-
 function SelfDevelopment() {
   return (
     <div className="w-full flex justify-center py-10">
