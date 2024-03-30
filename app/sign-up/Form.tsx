@@ -11,13 +11,16 @@ import { database } from "@/config/_firebase/config";
 import { ref, set } from "firebase/database";
 import { schedulType } from "../Self-Development/types";
 import { schedules } from "../Self-Development/schedule";
-
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 export function SignupFormDemo() {
   // variabel
   const [emailValue, setEmailValue] = useState("");
+  const [userNamedValue, setUserNameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [password2, setPassword2] = useState("");
   const [isSucces, setIsSucces] = useState(false);
+  const router = useRouter();
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
 
@@ -37,16 +40,19 @@ export function SignupFormDemo() {
           emailValue,
           passwordValue
         );
-        const user = {
-          email: res?.user?.email,
-          emailVerified: res?.user?.emailVerified,
-          token: res?.user?.refreshToken,
-          uid: res?.user?.uid,
-        };
-        setIsSucces(false);
-        writeUserScheduleDefault(user, schedules);
-        setEmailValue("");
-        setPasswordValue("");
+        if (res) {
+          const user = {
+            email: res?.user?.email,
+            emailVerified: res?.user?.emailVerified,
+            token: res?.user?.refreshToken,
+            uid: res?.user?.uid,
+          };
+          setIsSucces(false);
+          writeUserScheduleDefault(user, schedules);
+          setEmailValue("");
+          setPasswordValue("");
+          router.push("/sign-in");
+        }
       } catch (err) {
         console.log(err);
       }
@@ -63,6 +69,18 @@ export function SignupFormDemo() {
       </p>
       <form className="my-2" onSubmit={handleSubmit}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4"></div>
+        <LabelInputContainer className="mb-4">
+          <Label htmlFor="username">Username</Label>
+          <Input
+            id="username"
+            placeholder="nama lengkap"
+            type="text"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setUserNameValue(e.target.value)
+            }
+            value={userNamedValue}
+          />
+        </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input
@@ -104,7 +122,7 @@ export function SignupFormDemo() {
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
         >
-          {isSucces ? "Loading..." : "Sign-Up"}
+          {isSucces ? "Loading..." : "Register"}
           <BottomGradient />
         </button>
 

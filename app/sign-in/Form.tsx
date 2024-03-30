@@ -5,9 +5,12 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
 import { IconBrandGoogle } from "@tabler/icons-react";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/config/_firebase/config";
 import { useRouter } from "next/navigation";
+import { auth } from "@/config/_firebase/config";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setUser } from "@/lib/features/Authentication";
 
 export function SignInFormDemo() {
   const [emailValue, setEmailValue] = useState("");
@@ -15,9 +18,12 @@ export function SignInFormDemo() {
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const [isFailed, setIsFailed] = useState(false);
   const [isSucces, setIsSucces] = useState(true);
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     setIsSucces(false);
     e.preventDefault();
     try {
@@ -29,8 +35,10 @@ export function SignInFormDemo() {
         uid: res?.user?.uid,
       };
       if (res !== undefined) {
-        setIsSucces(true);
+        dispatch(setUser(user));
+        localStorage.setItem("user", JSON.stringify(user));
         router.push("/Self-Development");
+        setIsSucces(true);
       } else {
         setIsFailed(true);
         setIsSucces(true);
@@ -38,6 +46,32 @@ export function SignInFormDemo() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const loginWithGoogle = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result.user;
+        const takeUser: any = {
+          email: user.email,
+          username: user?.displayName,
+          token,
+          uid: user?.uid,
+          photo: user?.photoURL,
+          phoneNumber: user?.phoneNumber,
+        };
+        localStorage.setItem("user", JSON.stringify(takeUser));
+        router.push("/Self-Development");
+      })
+      .catch((error: Error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -48,7 +82,7 @@ export function SignInFormDemo() {
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
         Jika kamu belum punya akun harap sign up terlebih dahulu
       </p>
-      <form className="my-2" onSubmit={handleSubmit}>
+      <form className="my-2">
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4"></div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
@@ -77,28 +111,29 @@ export function SignInFormDemo() {
 
         <button
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          type="submit"
+          onClick={handleSubmit}
         >
-          {isSucces ? "Sign in" : "Loading..."}
+          {isSucces ? "Login" : "Loading..."}
           <BottomGradient />
         </button>
 
         <h1 className="text-black text-sm text-center my-2">
           Belum punya akun{" "}
           <Link href={"/sign-up"} className="text-green-600 font-bold">
-            Sing-up
+            Register
           </Link>
         </h1>
         {isFailed && (
           <h1 className="text-red-500 text-xs font-semibold">
-            Login Failed, there is something wrong
+            Login Gagal,harap register terlebih dahulu atau periksa email dan
+            password
           </h1>
         )}
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
         <div className="flex flex-col space-y-4">
           <button
-            className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-            type="submit"
+            onClick={loginWithGoogle}
+            className=" relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
           >
             <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
             <span className="text-neutral-700 dark:text-neutral-500 text-sm">

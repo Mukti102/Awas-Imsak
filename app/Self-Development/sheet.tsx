@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import { Concert_One } from "next/font/google";
 import { FaEdit } from "react-icons/fa";
@@ -6,7 +5,7 @@ import { FaTrash } from "react-icons/fa";
 import Modal from "./Modal";
 import Loading from "@/components/ui/Loading/Loading";
 import { schedulType } from "./types";
-import { schedules } from "./schedule";
+
 const madimi = Concert_One({
   weight: "400",
   subsets: ["latin"],
@@ -34,6 +33,7 @@ function Sheet() {
       time,
     };
     setData((prev) => [...(prev ?? []), newSchedule]);
+    saveDataToLocalStorage([...(data ?? []), newSchedule]);
   };
 
   const done = (id: number) => {
@@ -44,6 +44,7 @@ function Sheet() {
       return item;
     });
     setData(updatedData);
+    saveDataToLocalStorage(updatedData);
   };
 
   const updateSchedule = (task: string, time: string, id: number) => {
@@ -55,15 +56,26 @@ function Sheet() {
       }
     });
     setData(update);
+    saveDataToLocalStorage(update);
   };
 
   const removeSchedule = (item: schedulType) => {
     const filter: any = data?.filter((e) => e.id !== item.id);
     setData(filter);
+    saveDataToLocalStorage(filter);
+  };
+
+  const saveDataToLocalStorage = (data: schedulType[]) => {
+    localStorage.setItem("schedule", JSON.stringify(data));
   };
 
   useEffect(() => {
-    setData(schedules);
+    const storedData = localStorage.getItem("schedule");
+    if (storedData) {
+      setData(JSON.parse(storedData));
+    } else {
+      setData([]);
+    }
   }, []);
 
   return (
@@ -72,7 +84,7 @@ function Sheet() {
         <Loading />
       ) : (
         <div
-          className={`${madimi.className} sm:w-[70%] w-full m-5 sm:p-5 p-1 bg-white rounded-sm text-[#111]`}
+          className={`${madimi.className} sm:w-[70%] w-full m-5 sm:p-5 px-1 py-5 bg-white rounded-sm text-[#111]`}
         >
           <h1 className="mx-auto block font-bold sm:text-4xl text-xl w-max">
             Daily Planner

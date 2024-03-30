@@ -15,6 +15,8 @@ const poppins = Poppins({
 });
 
 function Hero() {
+  // const login = useAppSelector((state) => state.Login);
+  const login = localStorage.getItem("user") !== null;
   // AOS
   useEffect(() => {
     AOS.init();
@@ -72,7 +74,9 @@ function Hero() {
         <Button href="/niat">Awas Lupa Niat</Button>
         <Button href="/tadarus">Awas Lupa Tadarus</Button>
         <Button href="/resep">Awas Lupa Masak</Button>
-        <Button href={"/Self-Development"}>Self Development</Button>
+        <Button href={!login ? "/sign-in" : "/Self-Development"}>
+          Self Development
+        </Button>
       </div>
     </main>
   );

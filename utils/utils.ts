@@ -7,7 +7,7 @@ export const getCurrentDate = () => {
   const tanggal = date.getDate();
   const bulan = date.getMonth();
   const tahun = date.getFullYear();
-  return `${tahun}-${formatDate(bulan)}-${formatDate(tanggal)}`;
+  return `${tahun}-${formatDate(bulan + 1)}-${formatDate(tanggal)}`;
 };
 
 export const formatTime = (e: number): string => {
