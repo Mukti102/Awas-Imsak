@@ -30,7 +30,6 @@ export function SignInFormDemo() {
       };
       if (res !== undefined) {
         setIsSucces(true);
-        // dispatch({ type: "CHANGE_ISLOGIN", value: true });
         router.push("/Self-Development");
       } else {
         setIsFailed(true);

@@ -6,6 +6,7 @@ import { Poppins } from "next/font/google";
 import AOS from "aos";
 import patern from "@/public/patern.png";
 import Image from "next/image";
+import { useAppSelector } from "@/lib/hooks";
 
 // fonts
 const poppins = Poppins({
@@ -18,7 +19,6 @@ function Hero() {
   useEffect(() => {
     AOS.init();
   }, []);
-
   return (
     <main className="sm:p-10 p-8  lg:w-1/2 w-full sm:h-screen h-max text-white relative ">
       <div

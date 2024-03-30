@@ -72,12 +72,12 @@ function Sheet() {
         <Loading />
       ) : (
         <div
-          className={`${madimi.className} sm:w-[70%] w-full m-5 p-5 bg-white rounded-sm text-[#111]`}
+          className={`${madimi.className} sm:w-[70%] w-full m-5 sm:p-5 p-1 bg-white rounded-sm text-[#111]`}
         >
           <h1 className="mx-auto block font-bold sm:text-4xl text-xl w-max">
             Daily Planner
           </h1>
-          <table className="w-full mt-3 border-collapse text-left  text-gray-700">
+          <table className="w-full mt-3 border-collapse text-left text-gray-700">
             <thead className="">
               <tr className="font-bold">
                 <th
@@ -88,13 +88,13 @@ function Sheet() {
                 </th>
                 <th
                   scope="col"
-                  className="px-6  text-center  py-3 font-medium sm:text-[1.1rem] text-xs text-black"
+                  className="sm:px-6 px-1 sm:text-center  text-start  py-3 font-medium sm:text-[1.1rem] text-xs text-black"
                 >
                   Time
                 </th>
                 <th
                   scope="col"
-                  className="px-6  py-3 font-medium text-black sm:text-[1.1rem] text-xs"
+                  className="sm:px-6  px-1   py-3 font-medium text-black sm:text-[1.1rem] text-xs"
                 >
                   Schedule
                 </th>
@@ -120,7 +120,7 @@ function Sheet() {
                     <td
                       className={`${
                         item?.status ? "line-through text-slate-400" : ""
-                      } px-6 sm:text-sm text-center text-xs  py-2`}
+                      } sm:px-6 px-1 sm:text-center sm:text-sm text-start text-xs  py-2`}
                     >
                       {item?.time}
                     </td>
@@ -131,7 +131,7 @@ function Sheet() {
                     >
                       {item?.task}
                     </td>
-                    <td className="flex justify-center text-sm sm:gap-4 gap-2 px-6 py-2 font-medium">
+                    <td className="flex justify-center text-sm sm:gap-4 gap-2 sm:px-6 px-0 py-2  sm:py-2 font-medium">
                       <input
                         type="checkbox"
                         checked={item?.status}
