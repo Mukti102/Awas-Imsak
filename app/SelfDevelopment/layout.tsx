@@ -20,7 +20,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="sm:w-[70%] w-full sm:p-8 p-1 h-full -z-20 mx-auto mt-5">
+    <div className="sm:w-[70%] w-full sm:p-8 p-0 h-full -z-20 mx-auto mt-5">
       <div className="absolute w-32  cursor-pointer sm:right-20 overflow-hidden sm:top-10 -right-0 flex justify-center gap-2 top-5 rounded-full">
         <button
           className="font-bold sm:text-base text-xs"
