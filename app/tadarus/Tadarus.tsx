@@ -15,6 +15,7 @@ const Arab = Noto_Naskh_Arabic({
 function Tadarus() {
   const [surat, setSurat] = useState<Record<string, any>[] | []>([]);
   const suratPerPage = 8;
+  const [inputChange, setInputChange] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState(0);
   const filterSurat = surat.filter((item) =>
@@ -37,11 +38,15 @@ function Tadarus() {
   const currentSurat = filterSurat.slice(indexOfFirstSurat, indexOfLastSurat);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    setInputChange(e.target.value);
   };
 
   const handleChange = ({ selected }: { selected: number }) => {
     setSelected(selected);
+  };
+
+  const handleSearch = () => {
+    setInputValue(inputChange);
   };
 
   return (
@@ -53,7 +58,15 @@ function Tadarus() {
       ) : (
         <div className="w-full max-h-screen overflow-hidden">
           <div className="sm:w-full w-screen p-2 sm:p-0">
-            <Input onChange={handleInputChange}>Cari Surat...</Input>
+            <div className="flex items-center gap-2">
+              <Input onChange={handleInputChange}>Cari Surat...</Input>
+              <button
+                onClick={handleSearch}
+                className="bg-green-800 font-semibold text-xs sm:text-lg sm:h-full sm:py-3 sm:px-5 px-3  h-max py-2 rounded-sm"
+              >
+                search
+              </button>
+            </div>
             <div className="w-full sm:mt-10 mt-5 flex justify-between flex-wrap gap-2">
               {currentSurat?.map((item, index) => {
                 return (

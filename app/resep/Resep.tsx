@@ -18,6 +18,7 @@ function Resep() {
   const [resep, setResep] = useState<resepType[] | []>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const resepPerPage = 6;
+  const [inputChange, setInputChange] = useState("");
   const [inputValue, setInputValue] = useState<string>("");
   const filteredResep = resep.filter((item) =>
     item.title.toLocaleLowerCase().includes(inputValue)
@@ -40,7 +41,11 @@ function Resep() {
   };
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    setInputChange(e.target.value);
+  };
+
+  const handleSearch = () => {
+    setInputValue(inputChange);
   };
 
   // menampilkan berdasarkan currentpage
@@ -58,8 +63,16 @@ function Resep() {
         </div>
       ) : (
         <div className=" text-white sm:w-full w-screen overflow-hidden flex flex-col items-center  p-10">
-          <div className="w-full  sm:p-5 p-0">
-            <Input onChange={handleChangeInput}>cari masakan...</Input>
+          <div className="w-full sm:p-5 p-0">
+            <div className="flex items-center gap-2">
+              <Input onChange={handleChangeInput}>cari masakan...</Input>
+              <button
+                onClick={handleSearch}
+                className="bg-green-800 font-semibold text-xs sm:text-lg sm:h-full sm:py-3 sm:px-5 px-3  h-max py-2 rounded-sm"
+              >
+                search
+              </button>
+            </div>
             <div className="w-full flex flex-wrap">
               <HoverEffect items={currentResep} />
             </div>
