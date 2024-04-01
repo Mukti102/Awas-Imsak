@@ -5,6 +5,7 @@ import { FaTrash } from "react-icons/fa";
 import Modal from "./Modal";
 import Loading from "@/components/ui/Loading/Loading";
 import { schedulType } from "./types";
+import { schedules } from "./schedule";
 
 const madimi = Concert_One({
   weight: "400",
@@ -70,11 +71,15 @@ function Sheet() {
   };
 
   useEffect(() => {
-    const storedData = localStorage.getItem("schedule");
-    if (storedData) {
-      setData(JSON.parse(storedData));
+    if (typeof window !== "undefined") {
+      const storedData = localStorage.getItem("schedule");
+      if (storedData) {
+        setData(JSON.parse(storedData));
+      } else {
+        setData(schedules);
+      }
     } else {
-      setData([]);
+      setData(schedules);
     }
   }, []);
 

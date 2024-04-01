@@ -37,7 +37,7 @@ export function SignInFormDemo() {
       if (res !== undefined) {
         dispatch(setUser(user));
         localStorage.setItem("user", JSON.stringify(user));
-        router.push("/Self-Development");
+        router.push("/SelfDevelopment");
         setIsSucces(true);
       } else {
         setIsFailed(true);
@@ -67,7 +67,7 @@ export function SignInFormDemo() {
           phoneNumber: user?.phoneNumber,
         };
         localStorage.setItem("user", JSON.stringify(takeUser));
-        router.push("/Self-Development");
+        router.push("/SelfDevelopment");
       })
       .catch((error: Error) => {
         console.log(error);

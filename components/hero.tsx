@@ -1,12 +1,11 @@
 "use client";
 import Button from "./Button";
 import "aos/dist/aos.css"; // You may need to import the CSS file as well
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Poppins } from "next/font/google";
 import AOS from "aos";
 import patern from "@/public/patern.png";
 import Image from "next/image";
-import { useAppSelector } from "@/lib/hooks";
 
 // fonts
 const poppins = Poppins({
@@ -15,8 +14,13 @@ const poppins = Poppins({
 });
 
 function Hero() {
-  // const login = useAppSelector((state) => state.Login);
-  const login = localStorage.getItem("user") !== null;
+  const [isLogin, setIsLogin] = useState(false);
+  const typeWindow = typeof window !== "undefined";
+
+  useEffect(() => {
+    setIsLogin(typeWindow);
+  }, [typeWindow]);
+
   // AOS
   useEffect(() => {
     AOS.init();
@@ -74,7 +78,7 @@ function Hero() {
         <Button href="/niat">Awas Lupa Niat</Button>
         <Button href="/tadarus">Awas Lupa Tadarus</Button>
         <Button href="/resep">Awas Lupa Masak</Button>
-        <Button href={!login ? "/sign-in" : "/Self-Development"}>
+        <Button href={isLogin ? "/sign-in" : "/SelfDevelopment"}>
           Self Development
         </Button>
       </div>
