@@ -1,7 +1,7 @@
 "use client";
 
 import { HoverEffect } from "@/components/ui/HoverEffect";
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Loading from "@/components/ui/Loading/Loading";
 import Input from "@/components/Input";
@@ -21,7 +21,7 @@ function Resep() {
   const [inputChange, setInputChange] = useState("");
   const [inputValue, setInputValue] = useState<string>("");
   const filteredResep = resep.filter((item) =>
-    item.title.toLocaleLowerCase().includes(inputValue)
+    item.title.toLowerCase().includes(inputValue)
   );
   const fetchResep = async () => {
     try {

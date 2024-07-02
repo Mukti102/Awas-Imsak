@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getCurrentDate, formatTime } from "@/utils/utils";
 import BoxJadwal from "./boxJadwal";
 type cityType = {
@@ -13,13 +13,15 @@ function Jadwal() {
   const [city, setCity] = useState<cityType[] | null>(null);
   const [schedule, setSchedule] = useState<null | any>(null);
   const [select, setSelect] = useState<string>("1622");
+  const [cityName, setCityName] = useState<string>("Jakarta"); // Default to "Jakarta"
+
   const fetchCity = async () => {
     const data = await fetch("https://api.myquran.com/v2/sholat/kota/semua");
     const res = await data.json();
     setCity(res.data);
   };
 
-  const fetcSchedule = async () => {
+  const fetchSchedule = async () => {
     const data = await fetch(
       `https://api.myquran.com/v2/sholat/jadwal/${select}/${getCurrentDate()}`
     );
@@ -28,7 +30,10 @@ function Jadwal() {
   };
 
   const handleSelect = (e: any) => {
-    setSelect(e.target.value);
+    const selectedId = e.target.value;
+    setSelect(selectedId);
+    const selectedCity = city?.find((kota) => kota.id === selectedId);
+    setCityName(selectedCity ? selectedCity.lokasi : ""); // Update cityName
   };
 
   useEffect(() => {
@@ -36,7 +41,7 @@ function Jadwal() {
   }, []);
 
   useEffect(() => {
-    fetcSchedule();
+    fetchSchedule();
   }, [select]);
 
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -47,7 +52,7 @@ function Jadwal() {
       setCurrentTime(new Date());
     }, 1000);
 
-    // mendapatkan timezone
+    // Mendapatkan timezone
     const timeOfminutes = currentTime.getTimezoneOffset();
     const timeOfHour = Math.floor(timeOfminutes / 60);
     let formatZona = "";
@@ -61,7 +66,7 @@ function Jadwal() {
       formatZona = "WIB";
     }
 
-    // format waktu
+    // Format waktu
     const getTime = `UTC${timeOfHour} | ${formatTime(
       currentTime.getSeconds()
     )} : ${currentTime.getMinutes()} : ${formatTime(
@@ -73,13 +78,23 @@ function Jadwal() {
     };
   }, [currentTime]);
 
+  const getDate = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
+    var yyyy = today.getFullYear();
+
+    const current: any = mm + "/" + dd + "/" + yyyy;
+    return current;
+  };
+
   return (
     <main className="sm:w-1/2 w-full p-8 flex flex-col items-center text-white">
       <div
         data-aos="fade-up"
         data-aos-delay="50"
         data-aos-duration="1000"
-        className="font-sans  border-[1px] border-green-600 w-full text-center sm:py-3 py-2 font-bold sm:text-3xl text-xl bg-secondary rounded-full"
+        className="font-sans border-[1px] border-green-600 w-full text-center sm:py-3 py-2 font-bold sm:text-3xl text-xl bg-secondary rounded-full"
       >
         {formatCurrentTime}
       </div>
@@ -87,7 +102,7 @@ function Jadwal() {
         data-aos="fade-up"
         data-aos-delay="100"
         data-aos-duration="1500"
-        className=" mt-7 font-bold w-full"
+        className="mt-7 font-bold w-full"
       >
         <label
           htmlFor="large"
@@ -99,7 +114,7 @@ function Jadwal() {
           id="large"
           onChange={handleSelect}
           value={select}
-          className="block outline-none text-primary w-full sm:my-5 my-3 sm:px-4 px-3 sm:py-3 py-1 sm:text-lg text-[1rem] optional:font-normal  optional:uppercase  text-gray-900 border border-gray-300 sm:rounded-lg rounded-md bg-gray-50"
+          className="block outline-none text-primary w-full sm:my-5 my-3 sm:px-4 px-3 sm:py-3 py-1 sm:text-lg text-[1rem] optional:font-normal optional:uppercase text-gray-900 border border-gray-300 sm:rounded-lg rounded-md bg-gray-50"
         >
           <option selected>{city ? city[100].lokasi : "Jakarta"}</option>
           {city?.map((kota) => {
@@ -122,8 +137,8 @@ function Jadwal() {
           <span className="font-semibold">Hari/Tanggal : </span>
         </div>
         <div className="w-full flex mt-1 sm:text-[1.4rem] text-[1.1rem] justify-between">
-          <span className="">Jakarta</span>
-          <span className="">Rabu/20/10/2002</span>
+          <span className="">{cityName}</span>
+          <span className="">{getDate()}</span>
         </div>
       </div>
       <BoxJadwal schedule={schedule} />
